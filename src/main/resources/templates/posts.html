@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Post Details</h1>
+    <div class="profile-details">
+        <!-- The th:each should be used on a container element like div -->
+        <div th:each="post:${allPosts}">
+            
+            <p>
+                <strong>Photo:</strong>
+            </p>
+            <img th:if="${post.photoBase64}"   th:src="'data:image/jpeg;base64,' + ${post.photoBase64}" alt="Profile Photo" /> 
+              
+              <p> <strong>Caption:</strong>
+              <span th:text="${post.caption}"></span> </p>
+              
+                <p> <strong>Likes:</strong>
+              <span th:text="${post.likes}"></span> </p>
+               <p> <strong>comments:</strong>
+                   <span th:text="${post.comments != null ? post.comments.size() : 0}"></span>
+               
+       <!--     <a href="/likePost"><h1>👍</h1></a>
+               <br><br> -->
+               
+               
+	        <form action="/likePost" method="post">
+	        	<input name = "id" th:value="${post.id}">
+	        	<input type="submit" value="👍">
+	        </form>
+               
+               <form action="/commentPost" method="post">
+               <input name = "id" th:value="${post.id}">
+               <textarea name="comment"></textarea>
+               <input type="submit">
+               </form>
+           <hr />
+           <!-- <p th:if="${!post.photoBase64}">No photo available</p>  -->
+        </div>
+    </div>
+    <a href="/">Back to Form</a>
+</body>
+</html>
